@@ -36,6 +36,13 @@ class KDTree
 	KDNode* constructKDTree(std::list<Vector2f>& data, int depth);
 	void traverse(KDNode* node, std::list<Vector2f>& list);
 
+	void preprocessBoundaries(KDNode* node, bool isEvenDepth);
+
+	/*Returns true if region r1 is completely inside region r2*/
+	bool isInside(const KDRegion2D& r1, const KDRegion2D& r2);
+
+	bool isIntersect(const KDRegion2D& r1, const KDRegion2D& r2);
+
 public:
 
 	KDTree() {}
@@ -43,7 +50,9 @@ public:
 	KDTree(std::list<Vector2f>& data, float depth)
 	{
 		constructKDTree(data, depth);
+		root->boundary = defaultBound;
+		preprocessBoundaries(root, true);
 	}
 
-	searchKDTree(node, searchRange);
+	void searchKDTree(KDNode* node, const KDRegion2D& searchRange, std::list<Vector2f>& list);
 };
