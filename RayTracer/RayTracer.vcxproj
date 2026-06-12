@@ -129,12 +129,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Project1\Project1.vcxproj">
-      <Project>{ae1ebf4b-9b38-4cda-9516-56dd83ed4846}</Project>
-    </ProjectReference>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ProjectReference Include="..\ComputationalGeometryAlgorithms\ComputationalGeometryAlgorithms.vcxproj">
+      <Project>{ae1ebf4b-9b38-4cda-9516-56dd83ed4846}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
