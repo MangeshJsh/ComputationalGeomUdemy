@@ -46,6 +46,14 @@ public:
 	//Scalar multiplication
 	Vector<coordinate_type, dimension> operator*(double scale) const;
 
+	Vector<coordinate_type, dimension>& operator+=(const Vector<coordinate_type, dimension>& rhs);
+
+	Vector<coordinate_type, dimension>& operator-=(const Vector<coordinate_type, dimension>& rhs);
+
+	Vector<coordinate_type, dimension>& operator*=(double t);
+
+	Vector<coordinate_type, dimension>& operator/=(double t);
+
 	//Less than operator
 	bool operator <(const Vector<coordinate_type, dimension>&);
 
@@ -64,8 +72,19 @@ public:
 	//magnitude
 	float length() const;
 
+	float length_squared() const;
+
 	//normalize
 	void normalize();
+
+	std::ostream& operator<<(std::ostream& out, const Vector<coordinate_type, dimension>& vec)
+	{
+		for (size_t i = 0; i < coords.size(); ++i)
+		{
+			std::cout << coords[i] << " ";
+		}
+		return out;
+	}
 };
 
 
@@ -102,6 +121,42 @@ template<typename coordinate_type, size_t dimension>
 Vector<coordinate_type, dimension> Vector<coordinate_type, dimension>::operator-(const Vector<coordinate_type, dimension>& rhs) const
 {
 	return Vector(coords[0] - rhs.coords[0], coords[1] - rhs.coords[1], coords[2] - rhs.coords[2]);
+}
+
+template<typename coordinate_type, size_t dimension>
+Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator+=(const Vector<coordinate_type, dimension>& rhs)
+{
+	coords[0] += rhs.coords[0];
+	coords[1] += rhs.coords[1];
+	coords[2] += rhs.coords[2];
+	return *this;
+}
+
+template<typename coordinate_type, size_t dimension>
+Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator-=(const Vector<coordinate_type, dimension>& rhs) 
+{
+	coords[0] -= rhs.coords[0];
+	coords[1] -= rhs.coords[1];
+	coords[2] -= rhs.coords[2];
+	return *this;
+}
+
+template<typename coordinate_type, size_t dimension>
+Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator*=(double t)
+{
+	coords[0] *= t;
+	coords[1] *= t;
+	coords[2] *= t;
+	return *this;
+}
+
+template<typename coordinate_type, size_t dimension>
+Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator/=(double t)
+{
+	coords[0] /= t;
+	coords[1] /= t;
+	coords[2] /= t;
+	return *this;
 }
 
 template<typename coordinate_type, size_t dimension>
@@ -174,6 +229,18 @@ float Vector<coordinate_type, dimension>::length() const
 	}
 	return std::sqrt(sum);
 }
+
+template<typename coordinate_type, size_t dimension>
+float Vector<coordinate_type, dimension>::length_squared() const
+{
+	float sum;
+	for (size_t i = 0; i < dimension; ++i)
+	{
+		sum += coords[i] * coords[i];
+	}
+	return sum;
+}
+
 
 template<typename coordinate_type, size_t dimension>
 void Vector<coordinate_type, dimension>::normalize()
