@@ -31,7 +31,7 @@ bool collinear( Vector3f v1,  Vector3f v2);
 
 bool collinear(Point3d p1, Point3d p2, Point3d p3);
 
-bool coplanar(Vector3f v1, Vector3f v2, Vector3f v2);
+bool coplanar(Vector3f v1, Vector3f v2, Vector3f v3);
 
 bool coplanar(const Point3d& a, const Point3d& b, const Point3d& c, const Point3d& d);
 
@@ -46,3 +46,7 @@ float distancePointToPlane(const Point3d& p, const Plane<float>& plane);
 bool intersectionPlaneAndPlane(const Plane<float>& plane1, const Plane<float>& plane2, Line<float, DIM3>& intersectionLine);
 
 bool isDiagonal(const Vertex2d* v1, const Vertex2d* v2, PolygonS2d* poly = nullptr);
+
+bool left(const Point2d& a, const Point2d& b, const Point2d& c);
+
+bool leftOrBeyond(const Point2d& a, const Point2d& b, const Point2d& c);

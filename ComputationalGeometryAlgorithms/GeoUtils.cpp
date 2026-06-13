@@ -122,7 +122,7 @@ float angleBetweenLines3D(const Line<float, DIM3>& l1, const Line<float, DIM3>& 
 
 float angleBetweenLineAndPlane(const Line<float, DIM3>& l1, const Plane<float>& plane)
 {
-	double angleBetweenPlaneNormalAndLine = getAngle(l1.direction(), plane.normal());
+	float angleBetweenPlaneNormalAndLine = getAngle(l1.direction(), plane.normal());
 	return 90 - angleBetweenPlaneNormalAndLine;
 }
 
@@ -224,6 +224,17 @@ float distancePointToPlane(const Point3d& q, const Plane<float>& plane)
 	return true;
 }
 
+ bool left(const Point2d& a, const Point2d& b, const Point2d& c)
+ {
+	 return orientation2D(a, b, c) == RelativePosition::LEFT;
+ }
+
+ bool leftOrBeyond(const Point2d& a, const Point2d& b, const Point2d& c)
+ {
+	 auto orientation = orientation2D(a, b, c);
+	 return orientation == RelativePosition::LEFT || orientation == RelativePosition::BEYOND;
+ }
+
  static bool isInterior(const Vertex2d* v1, const Vertex2d* v2)
  {
 	 if (leftOrBeyond(v1->point, v1->next->point, v1->prev->point))
@@ -238,7 +249,7 @@ float distancePointToPlane(const Point3d& q, const Plane<float>& plane)
 		 leftOrBeyond(v2->point, v1->point, v1->prev->point));
  }
 
- bool isDiagonal(const Vertex2d* v1, const Vertex2d* v2, PolygonS2d* poly = nullptr)
+ bool isDiagonal(const Vertex2d* v1, const Vertex2d* v2, PolygonS2d* poly)
  {
 	 bool prospect = true;
 	 std::vector<Vertex2d*> vertices;

@@ -54,6 +54,8 @@ public:
 
 	Vector<coordinate_type, dimension>& operator/=(double t);
 
+	Vector<coordinate_type, dimension> operator/(double t);
+
 	//Less than operator
 	bool operator <(const Vector<coordinate_type, dimension>&);
 
@@ -77,7 +79,7 @@ public:
 	//normalize
 	void normalize();
 
-	std::ostream& operator<<(std::ostream& out, const Vector<coordinate_type, dimension>& vec)
+	friend std::ostream& operator<<(std::ostream& out, const Vector<coordinate_type, dimension>& vec)
 	{
 		for (size_t i = 0; i < coords.size(); ++i)
 		{
@@ -157,6 +159,12 @@ Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator
 	coords[1] /= t;
 	coords[2] /= t;
 	return *this;
+}
+
+template<typename coordinate_type, size_t dimension>
+Vector<coordinate_type, dimension> Vector<coordinate_type, dimension>::operator/(double t)
+{
+	return Vector3f(coords[0] / t, coords[1] / t, coords[2] / t);
 }
 
 template<typename coordinate_type, size_t dimension>
@@ -255,7 +263,7 @@ void Vector<coordinate_type, dimension>::normalize()
 template<typename coordinate_type, size_t dimension>
 Vector<coordinate_type, dimension> Vector<coordinate_type, dimension>::operator*(double scale) const
 {
-	return Vector<coordinate_type, dimension>(coords[0] * scale, coords[1] * scale, coords[2] * scale, );
+	return Vector<coordinate_type, dimension>(coords[0] * scale, coords[1] * scale, coords[2] * scale);
 }
 
 float crossProduct2D(Vector2f v1, Vector2f v2);

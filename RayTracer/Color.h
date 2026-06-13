@@ -2,9 +2,9 @@
 
 #include "Vector.h"
 
-using color = Vector3f;
+using Color = Vector3f;
 
-void write_color(std::ostream& out, const color& pixelColor)
+void write_color(std::ostream& out, const Color& pixelColor)
 {
 	//convert values in the range 0-1 to 0 to 255
 	auto rbyte = static_cast<int>(255.999 * pixelColor[X]);

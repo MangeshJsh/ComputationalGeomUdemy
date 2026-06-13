@@ -1,7 +1,7 @@
 #include "BinarySearchTree.h"
 #include <queue>
 
-BST::BST(std::vector<float> _values, const unsigned int _index = 0)
+BST::BST(std::vector<float> _values, const unsigned int _index)
 {
 	root = new BSTNode(_values[_index]);
 	for (size_t i = 0; i < _values.size(); ++i)

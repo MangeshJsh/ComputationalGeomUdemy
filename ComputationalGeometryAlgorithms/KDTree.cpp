@@ -99,9 +99,9 @@ void KDTree::searchKDTree(KDNode* node, const KDRegion2D& searchRange, std::list
 {
 	if (isALeaf(node))
 	{
-		if (isInRange(node->data, searchRange))
+		if (isInRange(node->point, searchRange))
 		{
-			list.push_back(node->data);
+			list.push_back(node->point);
 		}
 	}
 	else
