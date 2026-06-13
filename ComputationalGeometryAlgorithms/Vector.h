@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <array>
+#include <climits>
 
 constexpr int DIM2 = 2;
 constexpr int DIM3 = 3;
@@ -27,9 +28,19 @@ public:
 
 	Vector(const std::array<coordinate_type, dimension>& _coords) : coords(_coords) {}
 
-	Vector(coordinate_type _x, coordinate_type _y, coordinate_type _z) : coords({_x, _y, _z}) {}
+	template <size_t D = dimension,
+		typename = std::enable_if_t<D == 2>>
+		Vector(coordinate_type _x, coordinate_type _y)
+		: coords{ _x, _y }
+	{
+	}
 
-	Vector(coordinate_type _x, coordinate_type _y) : coords({ _x, _y }) {}
+	template <size_t D = dimension,
+		typename = std::enable_if_t<D == 3>>
+		Vector(coordinate_type _x, coordinate_type _y, coordinate_type _z)
+		: coords{ _x, _y, _z }
+	{
+	}
 
 	//Equality check
 	bool operator==(const Vector<coordinate_type, dimension>&) const;
@@ -63,18 +74,18 @@ public:
 	bool operator >(const Vector<coordinate_type, dimension>&);
 
 	//Indexing operator
-	coordinate_type operator[](int) const;
+	coordinate_type operator[](size_t) const;
 
 	//Assign value to a dimension
-	void assign(int dim, coordinate_type value);
+	void assign(size_t dim, coordinate_type value);
 
 	//dot product
-	float dot(const Vector<coordinate_type, dimension>&);
+	coordinate_type dot(const Vector<coordinate_type, dimension>&);
 
 	//magnitude
-	float length() const;
+	coordinate_type length() const;
 
-	float length_squared() const;
+	coordinate_type length_squared() const;
 
 	//normalize
 	void normalize();
@@ -116,55 +127,87 @@ bool Vector<coordinate_type, dimension>::operator!=(const Vector<coordinate_type
 template<typename coordinate_type, size_t dimension>
 Vector<coordinate_type, dimension> Vector<coordinate_type, dimension>::operator+(const Vector<coordinate_type, dimension>& rhs) const
 {
-	return Vector(coords[0] + rhs.coords[0], coords[1] + rhs.coords[1], coords[2] + rhs.coords[2]);
+	Vector<coordinate_type, dimension> temp;
+
+	for (size_t i = 0; i < dimension; ++i)
+	{
+		temp.assign(i, coords[i] + rhs.coords[i]);
+	}
+
+	return temp;
 }
 
 template<typename coordinate_type, size_t dimension>
 Vector<coordinate_type, dimension> Vector<coordinate_type, dimension>::operator-(const Vector<coordinate_type, dimension>& rhs) const
 {
-	return Vector(coords[0] - rhs.coords[0], coords[1] - rhs.coords[1], coords[2] - rhs.coords[2]);
+
+	Vector<coordinate_type, dimension> temp;
+
+	for (size_t i = 0; i < dimension; ++i)
+	{
+		temp.assign(i, coords[i] - rhs.coords[i]);
+	}
+
+	return temp;
 }
 
 template<typename coordinate_type, size_t dimension>
 Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator+=(const Vector<coordinate_type, dimension>& rhs)
 {
-	coords[0] += rhs.coords[0];
-	coords[1] += rhs.coords[1];
-	coords[2] += rhs.coords[2];
+	for (size_t i = 0; i < dimension; ++i)
+	{
+		coordinate_type val = coords[0] + rhs.coords[0];
+		assign(i, val);
+	}
 	return *this;
 }
 
 template<typename coordinate_type, size_t dimension>
 Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator-=(const Vector<coordinate_type, dimension>& rhs) 
 {
-	coords[0] -= rhs.coords[0];
-	coords[1] -= rhs.coords[1];
-	coords[2] -= rhs.coords[2];
+	for (size_t i = 0; i < dimension; ++i)
+	{
+		coordinate_type val = coords[0] - rhs.coords[0];
+		assign(i, val);
+	}
 	return *this;
 }
 
 template<typename coordinate_type, size_t dimension>
 Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator*=(coordinate_type t)
 {
-	coords[0] *= t;
-	coords[1] *= t;
-	coords[2] *= t;
+	for (size_t i = 0; i < dimension; ++i)
+	{
+		coordinate_type val = coords[0] * t;
+		assign(i, val);
+	}
+
 	return *this;
 }
 
 template<typename coordinate_type, size_t dimension>
 Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator/=(coordinate_type t)
 {
-	coords[0] /= t;
-	coords[1] /= t;
-	coords[2] /= t;
+	for (size_t i = 0; i < dimension; ++i)
+	{
+		coordinate_type val = coords[0] / t;
+		assign(i, val);
+	}
+
 	return *this;
 }
 
 template<typename coordinate_type, size_t dimension>
 Vector<coordinate_type, dimension> Vector<coordinate_type, dimension>::operator/(coordinate_type t)
 {
-	return Vector3f(coords[0] / t, coords[1] / t, coords[2] / t);
+	Vector<coordinate_type, dimension> temp;
+
+	for (size_t i = 0; i < dimension; ++i)
+	{
+		temp.assign(i, coords[i] / t);
+	}
+
+	return temp;
 }
 
 template<typename coordinate_type, size_t dimension>
@@ -196,7 +239,7 @@ bool Vector<coordinate_type, dimension>::operator >(const Vector<coordinate_type
 }
 
 template<typename coordinate_type, size_t dimension>
-coordinate_type Vector<coordinate_type, dimension>::operator[](int index) const
+coordinate_type Vector<coordinate_type, dimension>::operator[](size_t index) const
 {
 	if (index >= coords.size())
 	{
@@ -208,7 +251,7 @@ coordinate_type Vector<coordinate_type, dimension>::operator[](int index) const
 }
 
 template<typename coordinate_type, size_t dimension>
-void Vector<coordinate_type, dimension>::assign(int dim, coordinate_type value)
+void Vector<coordinate_type, dimension>::assign(size_t dim, coordinate_type value)
 {
 	if (dim >= coords.size())
 	{
@@ -220,17 +263,24 @@ void Vector<coordinate_type, dimension>::assign(int dim, coordinate_type value)
 
 
 template<typename coordinate_type, size_t dimension>
-float Vector<coordinate_type, dimension>::dot(const Vector<coordinate_type, dimension>& rhs)
+coordinate_type Vector<coordinate_type, dimension>::dot(const Vector<coordinate_type, dimension>& rhs)
 {
-	if (coords.size() != rhs.coords.size()) return FLT_MIN;
+	if (coords.size() != rhs.coords.size()) return std::numeric_limits<coordinate_type>::min();
 
-	return (coords[0] * rhs.coords[0] + coords[1] * rhs.coords[1] + coords[2] * rhs.coords[2]);
+	coordinate_type sum{};
+
+	for (size_t i = 0; i < dimension; ++i)
+	{
+		sum += coords[i] * rhs.coords[i];
+	}
+
+	return sum;
 }
 
 template<typename coordinate_type, size_t dimension>
-float Vector<coordinate_type, dimension>::length() const
+coordinate_type Vector<coordinate_type, dimension>::length() const
 {
-	float sum;
+	coordinate_type sum{};
 	for (size_t i = 0; i < dimension; ++i)
 	{
 		sum += coords[i] * coords[i];
@@ -239,9 +289,9 @@ float Vector<coordinate_type, dimension>::length() const
 }
 
 template<typename coordinate_type, size_t dimension>
-float Vector<coordinate_type, dimension>::length_squared() const
+coordinate_type Vector<coordinate_type, dimension>::length_squared() const
 {
-	float sum;
+	coordinate_type sum{};
 	for (size_t i = 0; i < dimension; ++i)
 	{
 		sum += coords[i] * coords[i];
@@ -253,17 +303,26 @@ float Vector<coordinate_type, dimension>::length_squared() const
 template<typename coordinate_type, size_t dimension>
 void Vector<coordinate_type, dimension>::normalize()
 {
-	float mag = length();
+	coordinate_type mag = length();
 	if (mag == 0.0) return;
-	coords[0] /= mag;
-	coords[1] /= mag;
-	coords[2] /= mag;
+
+	for (size_t i = 0; i < dimension; ++i)
+	{
+		assign(i, coords[i]/mag);
+	}	
 }
 
 template<typename coordinate_type, size_t dimension>
 Vector<coordinate_type, dimension> Vector<coordinate_type, dimension>::operator*(coordinate_type scale) const
 {
-	return Vector<coordinate_type, dimension>(coords[0] * scale, coords[1] * scale, coords[2] * scale);
+	Vector<coordinate_type, dimension> temp;
+
+	for (size_t i = 0; i < dimension; ++i)
+	{
+		temp.assign(i, coords[i] * scale);
+	}
+
+	return temp;
 }
 
 float crossProduct2D(Vector2f v1, Vector2f v2);

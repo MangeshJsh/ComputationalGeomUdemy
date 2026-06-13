@@ -9,7 +9,7 @@ enum class RelativePosition
 	LEFT, RIGHT, BEHIND, BEYOND, BETWEEN, ORIGIN, DESTINATION
 };
 
-static bool isEqualD(double x, double y)
+inline bool isEqualD(double x, double y)
 {
 	return std::fabs(x - y) < TOLERANCE;
 }
@@ -23,17 +23,17 @@ static bool isEqualD(double x, double y)
 	1	0	1
 
 */
-static bool _xor(bool a, bool b)
+inline bool _xor(bool a, bool b)
 {
 	return a ^ b;
 }
 
-float radianToDegree(float radian)
+inline float radianToDegree(float radian)
 {
 	return float((radian * 180) / PI);
 }
 
-float degreeToRadian(float degree)
+inline float degreeToRadian(float degree)
 {
 	return float((degree * PI) / 180);
 }

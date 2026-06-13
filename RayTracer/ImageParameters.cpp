@@ -14,12 +14,12 @@ ImageParams::ImageParams(float aspectRatio, int imageWidth, float viewportHeight
 void ImageParams::initializeCameraParams()
 {
 	m_cameraParams.focalLength = 1.0;
-	m_cameraParams.cameraCenter = Point3d(0.0, 0.0, 0.0);
-	m_cameraParams.viewport_u = Vector3f(m_viewportWidth, 0.0, 0.0);
-	m_cameraParams.viewport_v = Vector3f(0.0, -m_viewportHeight, 0.0);
+	m_cameraParams.cameraCenter = Point3d(0.0f, 0.0f, 0.0f);
+	m_cameraParams.viewport_u = Vector3f(m_viewportWidth, 0.0f, 0.0f);
+	m_cameraParams.viewport_v = Vector3f(0.0f, -m_viewportHeight, 0.0f);
 
-	m_cameraParams.pixel_delta_u = m_cameraParams.viewport_u / m_imageWidth;
-	m_cameraParams.pixel_delta_v = m_cameraParams.viewport_v / m_imageHeight;
+	m_cameraParams.pixel_delta_u = m_cameraParams.viewport_u / static_cast<float>(m_imageWidth);
+	m_cameraParams.pixel_delta_v = m_cameraParams.viewport_v / static_cast<float>(m_imageHeight);
 
 	m_cameraParams.viewport_upper_left = m_cameraParams.cameraCenter -
 		Vector3f(0, 0, m_cameraParams.focalLength)
