@@ -92,7 +92,7 @@ Point2d getIntersectionPoint(const Line<float, DIM2>& l1, const Line<float, DIM2
 
 	if (n.dot(ab) == 0) return Point2d(); // lines will be parallel or collinear
 
-	double t = n.dot(c - a) / n.dot(ab);
+	float t = n.dot(c - a) / n.dot(ab);
 
 	return a + (ab * t);
 }
@@ -105,8 +105,8 @@ Point2d getIntersectionPoint(const Point2d& a, const Point2d& b, const Point2d& 
 template<typename T, size_t dim>
 static float getAngle(Vector<T, dim> v1, Vector<T, dim> v2)
 {
-	double numerator = v1.dot(v2);
-	double denominator = v1.length() * v2.length();
+	float numerator = v1.dot(v2);
+	float denominator = v1.length() * v2.length();
 	return radianToDegree(std::acos(numerator / denominator));
 }
 

@@ -28,12 +28,12 @@ static bool _xor(bool a, bool b)
 	return a ^ b;
 }
 
-double radianToDegree(double radian)
+float radianToDegree(float radian)
 {
-	return (radian * 180) / PI;
+	return float((radian * 180) / PI);
 }
 
-double degreeToRadian(double degree)
+float degreeToRadian(float degree)
 {
-	return (degree * PI) / 180;
+	return float((degree * PI) / 180);
 }

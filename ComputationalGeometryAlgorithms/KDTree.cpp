@@ -35,6 +35,11 @@ void KDTree::traverse(KDNode* node, std::list<Vector2f>& list)
 	traverse(node->right, list);
 }
 
+bool KDTree::isALeaf(KDNode* node)
+{
+	return node->left == nullptr && node->right == nullptr;
+}
+
 void KDTree::preprocessBoundaries(KDNode* node, bool isEvenDepth)
 {
 	if (!node || isALeaf(node)) return;
@@ -99,10 +104,10 @@ void KDTree::searchKDTree(KDNode* node, const KDRegion2D& searchRange, std::list
 {
 	if (isALeaf(node))
 	{
-		if (isInRange(node->point, searchRange))
+		/*if (isInRange(node->point, searchRange))
 		{
 			list.push_back(node->point);
-		}
+		}*/
 	}
 	else
 	{

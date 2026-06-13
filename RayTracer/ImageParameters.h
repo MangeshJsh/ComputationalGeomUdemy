@@ -10,7 +10,7 @@ public:
 
 	struct CameraParams
 	{
-		double focalLength;
+		float focalLength;
 		Vector3f cameraCenter;
 		Vector3f viewport_u;
 		Vector3f viewport_v;
@@ -22,9 +22,9 @@ public:
 		Vector3f pixel00;
 	};
 
-	ImageParams(double aspectRatio, int imageWidth, double viewportHeight = 2.0);
+	ImageParams(float aspectRatio, int imageWidth, float viewportHeight = 2.0);
 
-	std::pair<double, double> getViewportParams();
+	std::pair<float, float> getViewportParams();
 
 	std::pair<int, int> getImageParams();
 
@@ -36,11 +36,11 @@ private:
 
 private:
 
-	double m_aspectRatio = 16.0 / 9.0;
+	float m_aspectRatio = 16.0 / 9.0;
 	int m_imageHeight = 1;
 	int m_imageWidth;
-	double m_viewportHeight = 2.0;
-	double m_viewportWidth;
+	float m_viewportHeight = 2.0;
+	float m_viewportWidth;
 
 	struct CameraParams m_cameraParams;
 };

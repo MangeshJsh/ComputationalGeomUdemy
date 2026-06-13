@@ -234,7 +234,10 @@ bool BST::remove(float _val)
 			successorOfNodeToDelete->left = nodeToDelete->left;
 			successorOfNodeToDelete->left->parent = successorOfNodeToDelete;
 		}
+		return true;
 	}
+
+	return false;
 }
 
 /* 1-D Range Query using BST.
@@ -314,4 +317,6 @@ std::vector<float> BST::oneDimensionalRangeSearch(float lowerBound, float upperB
 		if (node->value <= upperBound)
 			valuesInRange.push_back(node->value);
 	}
+
+	return valuesInRange;
 }

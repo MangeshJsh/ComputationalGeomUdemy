@@ -1,12 +1,12 @@
 #include "ImageParameters.h"
 
-ImageParams::ImageParams(double aspectRatio, int imageWidth, double viewportHeight) :
+ImageParams::ImageParams(float aspectRatio, int imageWidth, float viewportHeight) :
 	m_aspectRatio(aspectRatio), m_imageWidth(imageWidth), m_viewportHeight(viewportHeight)
 {
 	m_imageHeight = int(m_imageWidth / aspectRatio);
 	m_imageHeight = (m_imageHeight < 1) ? 1 : m_imageHeight;
 
-	m_viewportWidth = m_viewportHeight * double(m_imageWidth / m_imageHeight);
+	m_viewportWidth = m_viewportHeight * float(m_imageWidth / m_imageHeight);
 
 	initializeCameraParams();
 }
@@ -30,7 +30,7 @@ void ImageParams::initializeCameraParams()
 		(m_cameraParams.pixel_delta_u + m_cameraParams.pixel_delta_v) * 0.5;
 }
 
-std::pair<double, double> ImageParams::getViewportParams()
+std::pair<float, float> ImageParams::getViewportParams()
 {
 	return std::make_pair(m_viewportWidth, m_viewportHeight);
 }

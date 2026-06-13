@@ -29,7 +29,7 @@ struct RotatedRectangle
 {
 	RotatedRectangle(double _x, double _y, double _w, double _h);
 
-	std::vector<std::pair<double, double>> getVertices() { return vertices; }
+	std::vector<std::pair<double, double>> getVertices();
 
 	void rotate(double angleInDegrees);
 

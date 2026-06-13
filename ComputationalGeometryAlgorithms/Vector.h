@@ -44,17 +44,17 @@ public:
 	Vector<coordinate_type, dimension> operator-(const Vector<coordinate_type, dimension>&) const;
 
 	//Scalar multiplication
-	Vector<coordinate_type, dimension> operator*(double scale) const;
+	Vector<coordinate_type, dimension> operator*(coordinate_type scale) const;
 
 	Vector<coordinate_type, dimension>& operator+=(const Vector<coordinate_type, dimension>& rhs);
 
 	Vector<coordinate_type, dimension>& operator-=(const Vector<coordinate_type, dimension>& rhs);
 
-	Vector<coordinate_type, dimension>& operator*=(double t);
+	Vector<coordinate_type, dimension>& operator*=(coordinate_type t);
 
-	Vector<coordinate_type, dimension>& operator/=(double t);
+	Vector<coordinate_type, dimension>& operator/=(coordinate_type t);
 
-	Vector<coordinate_type, dimension> operator/(double t);
+	Vector<coordinate_type, dimension> operator/(coordinate_type t);
 
 	//Less than operator
 	bool operator <(const Vector<coordinate_type, dimension>&);
@@ -144,7 +144,7 @@ Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator
 }
 
 template<typename coordinate_type, size_t dimension>
-Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator*=(double t)
+Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator*=(coordinate_type t)
 {
 	coords[0] *= t;
 	coords[1] *= t;
@@ -153,7 +153,7 @@ Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator
 }
 
 template<typename coordinate_type, size_t dimension>
-Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator/=(double t)
+Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator/=(coordinate_type t)
 {
 	coords[0] /= t;
 	coords[1] /= t;
@@ -162,7 +162,7 @@ Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator
 }
 
 template<typename coordinate_type, size_t dimension>
-Vector<coordinate_type, dimension> Vector<coordinate_type, dimension>::operator/(double t)
+Vector<coordinate_type, dimension> Vector<coordinate_type, dimension>::operator/(coordinate_type t)
 {
 	return Vector3f(coords[0] / t, coords[1] / t, coords[2] / t);
 }
@@ -261,7 +261,7 @@ void Vector<coordinate_type, dimension>::normalize()
 }
 
 template<typename coordinate_type, size_t dimension>
-Vector<coordinate_type, dimension> Vector<coordinate_type, dimension>::operator*(double scale) const
+Vector<coordinate_type, dimension> Vector<coordinate_type, dimension>::operator*(coordinate_type scale) const
 {
 	return Vector<coordinate_type, dimension>(coords[0] * scale, coords[1] * scale, coords[2] * scale);
 }

@@ -43,11 +43,13 @@ class KDTree
 
 	bool isIntersect(const KDRegion2D& r1, const KDRegion2D& r2);
 
+	bool isALeaf(KDNode* node);
+
 public:
 
 	KDTree() {}
 
-	KDTree(std::list<Vector2f>& data, float depth)
+	KDTree(std::list<Vector2f>& data, int depth)
 	{
 		constructKDTree(data, depth);
 		root->boundary = defaultBound;

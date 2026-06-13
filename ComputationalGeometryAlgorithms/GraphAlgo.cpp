@@ -83,7 +83,7 @@ void GraphAdjList::addNode(int _id, const std::string& _value)
 	}
 }
 
-void GraphAdjList::addEdge(int v1ID, int v2ID, int weight = 0)
+void GraphAdjList::addEdge(int v1ID, int v2ID, int weight)
 {
 	vertex* v1 = nullptr;
 	vertex* v2 = nullptr;
