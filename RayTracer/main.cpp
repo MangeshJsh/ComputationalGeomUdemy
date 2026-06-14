@@ -9,7 +9,9 @@ Color rayColor(Ray& r, const Hittable& obj)
 {
 	HitRecord tempRec;
 
-	if (obj.hit(r, 0.0, INF<float>, tempRec))
+	Interval<float> interval{ 0.0, INF<float> };
+
+	if (obj.hit(r, interval, tempRec))
 	{
 		return (tempRec.normal + Color(1.0f, 1.0f, 1.0f)) * 0.5;
 	}

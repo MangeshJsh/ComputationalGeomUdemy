@@ -5,9 +5,9 @@
 constexpr float TOLERANCE = 0.0000001f;
 
 template<typename T>
-const float INF = std::numeric_limits<T>::infinity();
+constexpr T INF = std::numeric_limits<T>::infinity();
 
-const float PI = 3.1415926535897932385;
+const float PI = 3.1415926f;
 
 enum class RelativePosition
 {

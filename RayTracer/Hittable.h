@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Ray.h"
+#include "Interval.h"
 
 /*
 It is important to determine which side of the object the ray is on.
@@ -37,5 +38,5 @@ class Hittable
 public:
 	virtual ~Hittable() = default;
 
-	virtual bool hit(const Ray& r, float tmin, float tmax, HitRecord& rec) const = 0;
+	virtual bool hit(const Ray& r, IntervalF& ray_t, HitRecord& rec) const = 0;
 };

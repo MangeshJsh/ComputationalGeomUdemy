@@ -8,7 +8,7 @@ public:
 
 	Sphere(const Point3d center, float radius);
 
-	bool hit(const Ray& r, float tmin, float tmax, HitRecord& rec) const override;
+	bool hit(const Ray& r, IntervalF& ray_t, HitRecord& rec) const override;
 
 private:
 
