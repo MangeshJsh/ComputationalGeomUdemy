@@ -19,7 +19,7 @@ public:
 		m_objects.push_back(obj);
 	}
 
-	bool hit(const Ray& r, IntervalF& ray_t, HitRecord& rec) const override
+	bool hit(const Ray& r, const IntervalF& ray_t, HitRecord& rec) const override
 	{
 		HitRecord tempRec;
 		bool hitAnything = false;
@@ -27,14 +27,11 @@ public:
 
 		for (const auto& obj : m_objects)
 		{
-			if (obj->hit(r, ray_t, tempRec))
+			if (obj->hit(r, IntervalF{ ray_t.m_min, closestSoFar }, tempRec))
 			{
 				hitAnything = true;
-				if (tempRec.t < closestSoFar)
-				{
-					closestSoFar = tempRec.t;
-					rec = tempRec;
-				}
+				closestSoFar = tempRec.t;
+				rec = tempRec;
 			}
 		}
 		return hitAnything;

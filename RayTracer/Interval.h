@@ -15,12 +15,12 @@ public:
 
 	T size() { return m_max - m_min; }
 
-	bool contains(T x)
+	bool contains(T x) const
 	{
 		return (x >= m_min && x <= m_max);
 	}
 
-	bool surrounds(T x)
+	bool surrounds(T x) const
 	{
 		return (x > m_min && x < m_max);
 	}

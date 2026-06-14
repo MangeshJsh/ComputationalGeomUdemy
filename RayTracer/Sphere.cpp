@@ -1,10 +1,10 @@
 #include "Sphere.h"
 
 Sphere::Sphere(const Point3d center, float radius) :
-	m_center(center), m_radius(std::fmax(0, radius))
+	m_center(center), m_radius(std::fmax(0.0f, radius))
 {}
 
-bool Sphere::hit(const Ray& r, IntervalF& ray_t, HitRecord& rec) const
+bool Sphere::hit(const Ray& r, const IntervalF& ray_t, HitRecord& rec) const
 {
 	Vector3f oc = m_center - r.origin();
 	auto dir = r.direction();
@@ -20,10 +20,10 @@ bool Sphere::hit(const Ray& r, IntervalF& ray_t, HitRecord& rec) const
 
 	auto sqrtd = std::sqrt(discriminant);
 	auto t = (h - sqrtd) / a; //solve for t using ray sphere intersection
-	if (t <= ray_t.m_min || t >= ray_t.m_max)
+	if (!ray_t.surrounds(t))
 	{
 		t = (h + sqrtd) / a;
-		if (t <= ray_t.m_min || t >= ray_t.m_max)
+		if (!ray_t.surrounds(t))
 		{
 			return false;
 		}
