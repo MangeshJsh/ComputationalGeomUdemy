@@ -3,7 +3,10 @@
 #include <limits>
 
 constexpr float TOLERANCE = 0.0000001f;
-const float INF = std::numeric_limits<float>::infinity();
+
+template<typename T>
+const float INF = std::numeric_limits<T>::infinity();
+
 const float PI = 3.1415926535897932385;
 
 enum class RelativePosition

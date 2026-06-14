@@ -9,7 +9,7 @@ Color rayColor(Ray& r, const Hittable& obj)
 {
 	HitRecord tempRec;
 
-	if (obj.hit(r, 0.0, INF, tempRec))
+	if (obj.hit(r, 0.0, INF<float>, tempRec))
 	{
 		return (tempRec.normal + Color(1.0f, 1.0f, 1.0f)) * 0.5;
 	}
@@ -17,7 +17,7 @@ Color rayColor(Ray& r, const Hittable& obj)
 	Vector3f unit_direction = r.direction();
 	unit_direction.normalize();
 	auto a = 0.5 * (unit_direction[Y] + 1.0);
-	return Color(1.0, 1.0, 1.0) * (1.0 - a) +  Color(0.5, 0.7, 1.0) * a;
+	return Color(1.0f, 1.0f, 1.0f) * (1.0 - a) +  Color(0.5f, 0.7f, 1.0f) * a;
 }
 
 int main()
