@@ -1,35 +1,17 @@
 #include "ImageParameters.h"
-#include "Ray.h"
+
 #include "Color.h"
+#include "HittableList.h"
+#include "Sphere.h"
 
-double hit_sphere(const Point3d& center, double radius, const Ray& r) {
-	Vector3f oc = center - r.origin();
-	auto dir = r.direction();
-	auto a = dir.length_squared();
-	auto h = dir.dot(oc);
-	auto c = oc.length_squared() - radius * radius;
 
-	auto discriminant = h * h - a * c;
-	if (discriminant < 0) {
-		return -1.0;
-	}
-	else {
-		return (h - std::sqrt(discriminant)) / a;
-	}
-}
-
-Color rayColor(Ray& r)
+Color rayColor(Ray& r, const Hittable& obj)
 {
-	/*if (hit_sphere(Point3d(0, 0, -1), 0.3, r))
-		return Color(1, 0, 0);
-	else if (hit_sphere(Point3d(0, 0.3, -1.5), 0.5, r))
-		return Color(0, 1, 0);*/
+	HitRecord tempRec;
 
-	auto t = hit_sphere(Point3d(0, 0, -1), 0.6, r);
-	if (t > 0.0) {
-		Vector3f N = r.at(t) - Vector3f(0, 0, -1);
-		N.normalize();
-		return  Color(N[X] + 1 , N[Y] + 1, N[Z] + 1) * 0.5;
+	if (obj.hit(r, 0.0, INF, tempRec))
+	{
+		return (tempRec.normal + Color(1.0f, 1.0f, 1.0f)) * 0.5;
 	}
 	 
 	Vector3f unit_direction = r.direction();
@@ -43,6 +25,11 @@ int main()
 	ImageParams params(16/9, 500);
 	auto imageParams = params.getImageParams();
 	auto cameraParams = params.getCameraParams();
+
+	HittableList world;
+
+	world.add(make_shared<Sphere>(Point3d(0, 0, -1), 0.5));
+	world.add(make_shared<Sphere>(Point3d(0, -100.5, -1), 100));
 	
 	std::cout << "P3\n" << imageParams.first << " " << imageParams.second << "\n255\n";
 	for (int i = 0; i < imageParams.second ; ++i) //height
@@ -57,7 +44,7 @@ int main()
 
 			Ray r(cameraParams.cameraCenter, rayDirection);
 
-			Color pixelColor = rayColor(r);
+			Color pixelColor = rayColor(r, world);
 
 			write_color(std::cout, pixelColor);
 		}

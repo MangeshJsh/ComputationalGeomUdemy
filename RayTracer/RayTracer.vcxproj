@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="ImageParameters.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ComputationalGeometryAlgorithms\ComputationalGeometryAlgorithms.vcxproj">
@@ -139,7 +140,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Hittable.h" />
+    <ClInclude Include="HittableList.h" />
     <ClInclude Include="ImageParameters.h" />
+    <ClInclude Include="Sphere.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

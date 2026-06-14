@@ -1,15 +1,17 @@
 #pragma once
 #include <cmath>
+#include <limits>
 
-constexpr double TOLERANCE = 0.0000001;
-constexpr double PI = 3.14159;
+constexpr float TOLERANCE = 0.0000001f;
+const float INF = std::numeric_limits<float>::infinity();
+const float PI = 3.1415926535897932385;
 
 enum class RelativePosition
 {
 	LEFT, RIGHT, BEHIND, BEYOND, BETWEEN, ORIGIN, DESTINATION
 };
 
-inline bool isEqualD(double x, double y)
+inline bool isEqualD(float x, float y)
 {
 	return std::fabs(x - y) < TOLERANCE;
 }

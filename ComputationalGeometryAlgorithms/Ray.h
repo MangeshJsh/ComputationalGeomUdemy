@@ -14,7 +14,7 @@ public:
 	const Point3d& origin() const { return m_origin; }
 	const Vector3f& direction() const { return m_direction; }
 
-	Point3d at(float t)
+	Point3d at(float t) const
 	{
 		return m_origin + (m_direction * t);
 	}

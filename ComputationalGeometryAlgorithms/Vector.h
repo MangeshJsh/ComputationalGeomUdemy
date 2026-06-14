@@ -67,6 +67,16 @@ public:
 
 	Vector<coordinate_type, dimension> operator/(coordinate_type t);
 
+	Vector<coordinate_type, dimension> operator-() const
+	{
+		Vector<coordinate_type, dimension> temp;
+		for (size_t i = 0; i < dimension; ++i)
+		{
+			temp.assign(i, -coords[i]);
+		}
+		return temp;
+	}
+
 	//Less than operator
 	bool operator <(const Vector<coordinate_type, dimension>&);
 
