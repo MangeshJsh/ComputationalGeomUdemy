@@ -11,8 +11,8 @@ public:
 	Ray(const Point3d& point, const Vector3f& dir) :
 		m_origin(point), m_direction(dir) {	}
 
-	const Point3d& origin() { return m_origin; }
-	const Vector3f& direction() { return m_direction; }
+	const Point3d& origin() const { return m_origin; }
+	const Vector3f& direction() const { return m_direction; }
 
 	Point3d at(float t)
 	{
