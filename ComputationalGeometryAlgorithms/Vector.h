@@ -90,7 +90,7 @@ public:
 	void assign(size_t dim, coordinate_type value);
 
 	//dot product
-	coordinate_type dot(const Vector<coordinate_type, dimension>&);
+	coordinate_type dot(const Vector<coordinate_type, dimension>&) const;
 
 	//magnitude
 	coordinate_type length() const;
@@ -273,7 +273,7 @@ void Vector<coordinate_type, dimension>::assign(size_t dim, coordinate_type valu
 
 
 template<typename coordinate_type, size_t dimension>
-coordinate_type Vector<coordinate_type, dimension>::dot(const Vector<coordinate_type, dimension>& rhs)
+coordinate_type Vector<coordinate_type, dimension>::dot(const Vector<coordinate_type, dimension>& rhs) const
 {
 	if (coords.size() != rhs.coords.size()) return std::numeric_limits<coordinate_type>::min();
 

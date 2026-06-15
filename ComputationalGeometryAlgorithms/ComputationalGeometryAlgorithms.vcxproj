@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BinarySearchTree.h" />
+    <ClInclude Include="ConvexHull2D.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="GeoUtils.h" />
     <ClInclude Include="GraphAlgo.h" />

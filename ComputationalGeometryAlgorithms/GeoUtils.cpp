@@ -287,3 +287,35 @@ float distancePointToPlane(const Point3d& q, const Plane<float>& plane)
 
 	 return prospect && isInterior(v1, v2) && isInterior(v2, v1);
  }
+
+ float polarAngle(const Point2d& _other, const Point2d& _ref)
+ {
+	 // Consider the given points as 2D ones which are in XY plane
+	 float _x = _other[X] - _ref[X];
+	 float _y = _other[Y] - _ref[Y];
+
+	 if ((isEqualD(_x, 0.0)) && (isEqualD(_y, 0.0)))
+		 return -1.0;
+	 if (isEqualD(_x, 0.0))
+		 return ((_y > 0.0) ? 90 : 270);
+
+	 double theta = atan(_y / _x);
+	 theta = radianToDegree(theta);
+
+	 if (_x > 0.0)
+		 return ((_y >= 0.0) ? theta : 360 + theta);
+	 else
+		 return (180 + theta);
+ }
+
+ float angle(const Vector2f& _v1, const Vector2f& _v2)
+ {
+	 float dot = _v1.dot(_v2);
+	 float v1_mag = _v1.length();
+	 float v2_mag = _v2.length();
+	 auto deno = v1_mag * v2_mag;
+	 if (isEqualD(dot, deno))
+		 return 0;
+
+	 return acos(dot / (v1_mag * v2_mag));
+ }

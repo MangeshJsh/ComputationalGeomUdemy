@@ -50,3 +50,8 @@ bool isDiagonal(const Vertex2d* v1, const Vertex2d* v2, PolygonS2d* poly = nullp
 bool left(const Point2d& a, const Point2d& b, const Point2d& c);
 
 bool leftOrBeyond(const Point2d& a, const Point2d& b, const Point2d& c);
+
+// Returns counter clockwise angle (0 - 360) measure from referece point to the give point 
+float polarAngle(const Point2d& _other, const Point2d& _ref);
+
+float angle(const Vector2f& _v1, const Vector2f& _v2);
