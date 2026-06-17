@@ -139,6 +139,7 @@
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Polygon.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
@@ -148,6 +149,7 @@
     <ClCompile Include="GraphAlgo.cpp" />
     <ClCompile Include="KDTree.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

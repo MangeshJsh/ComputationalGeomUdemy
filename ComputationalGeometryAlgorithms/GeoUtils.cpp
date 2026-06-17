@@ -297,7 +297,7 @@ float distancePointToPlane(const Point3d& q, const Plane<float>& plane)
 	 if ((isEqualD(_x, 0.0)) && (isEqualD(_y, 0.0)))
 		 return -1.0;
 	 if (isEqualD(_x, 0.0))
-		 return ((_y > 0.0) ? 90 : 270);
+		 return ((_y > 0.0) ? 90.0f : 270.0f);
 
 	 double theta = atan(_y / _x);
 	 theta = radianToDegree(theta);

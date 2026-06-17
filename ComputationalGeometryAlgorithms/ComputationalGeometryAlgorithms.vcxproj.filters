@@ -54,6 +54,9 @@
     <ClInclude Include="ConvexHull2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QuadTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Vector.cpp">
@@ -72,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="KDTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
