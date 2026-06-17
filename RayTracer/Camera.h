@@ -5,6 +5,7 @@
 
 #include "Hittable.h"
 #include "Color.h"
+#include "Ray.h"
 
 class Camera
 {
@@ -12,12 +13,20 @@ public:
 
 	float m_aspectRatio = 1.0f;
 	int m_imageWidth = 100;
+	int m_samplesPerPixel = 10;
 
 	void render(const Hittable& world);
 	
 private:
 	void initialize();
 	Color rayColor(const Ray& r, const Hittable& world) const;
+
+	// Returns the vector to a random point in the [-.5,-.5]-[+.5,+.5] unit square.
+	Vector3f sampleSquare() const;
+
+	// Construct a camera ray originating from the origin and directed at randomly sampled
+	// point around the pixel location i, j.
+	Ray getRay(int i, int j) const;
 
 private:
 	int m_imageHeight;
@@ -35,4 +44,6 @@ private:
 
 	Vector3f m_viewport_upper_left;
 	Vector3f m_pixel00;
+
+	float m_pixelSamplesScale;
 };

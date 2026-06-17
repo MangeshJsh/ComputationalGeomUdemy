@@ -166,7 +166,7 @@ Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator
 {
 	for (size_t i = 0; i < dimension; ++i)
 	{
-		coordinate_type val = coords[0] + rhs.coords[0];
+		coordinate_type val = coords[i] + rhs.coords[i];
 		assign(i, val);
 	}
 	return *this;
@@ -177,7 +177,7 @@ Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator
 {
 	for (size_t i = 0; i < dimension; ++i)
 	{
-		coordinate_type val = coords[0] - rhs.coords[0];
+		coordinate_type val = coords[i] - rhs.coords[i];
 		assign(i, val);
 	}
 	return *this;
@@ -188,7 +188,7 @@ Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator
 {
 	for (size_t i = 0; i < dimension; ++i)
 	{
-		coordinate_type val = coords[0] * t;
+		coordinate_type val = coords[i] * t;
 		assign(i, val);
 	}
 
@@ -200,7 +200,7 @@ Vector<coordinate_type, dimension>& Vector<coordinate_type, dimension>::operator
 {
 	for (size_t i = 0; i < dimension; ++i)
 	{
-		coordinate_type val = coords[0] / t;
+		coordinate_type val = coords[i] / t;
 		assign(i, val);
 	}
 

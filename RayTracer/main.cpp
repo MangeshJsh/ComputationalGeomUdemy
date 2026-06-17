@@ -14,6 +14,7 @@ int main()
 
     cam.m_aspectRatio = 1.0f; // 16.0f / 9.0f;
     cam.m_imageWidth = 400;
+    cam.m_samplesPerPixel = 200;
 
     cam.render(world);
 	return 0;

@@ -1,5 +1,5 @@
 #include "Camera.h"
-
+#include "utils.h"
 Color Camera::rayColor(const Ray& r, const Hittable& world) const
 {
 	HitRecord tempRec;
@@ -24,7 +24,7 @@ void Camera::render(const Hittable& world)
 	{
 		for (int j = 0; j < m_imageWidth; ++j) //width
 		{
-			Vector3f pixelCenter = m_pixel00 +
+			/*Vector3f pixelCenter = m_pixel00 +
 				(m_pixel_delta_u * j) +
 				(m_pixel_delta_v * i);
 
@@ -32,9 +32,16 @@ void Camera::render(const Hittable& world)
 
 			Ray r(m_cameraCenter, rayDirection);
 
-			Color pixelColor = rayColor(r, world);
+			Color pixelColor = rayColor(r, world);*/
 
-			write_color(std::cout, pixelColor);
+
+			Color pixelColor(0.0f, 0.0f, 0.0f);
+			for (int sample = 0; sample < m_samplesPerPixel; ++sample)
+			{
+				Ray r = getRay(j, i);
+				pixelColor +=  rayColor(r, world);
+			}
+			write_color(std::cout, pixelColor * m_pixelSamplesScale);
 		}
 	}
 }
@@ -65,5 +72,22 @@ void Camera::initialize()
 
 	m_pixel00 = m_viewport_upper_left +
 		(m_pixel_delta_u + m_pixel_delta_v) * 0.5;
+
+	m_pixelSamplesScale = 1.0f / m_samplesPerPixel;
 }
 
+Vector3f Camera::sampleSquare() const
+{
+	return Vector3f{randomf() - 0.5f, randomf() - 0.5f, 0};
+}
+
+Ray Camera::getRay(int i, int j) const
+{
+	Vector3f offset = sampleSquare();
+
+	Vector3f sampledPixelPoint = m_pixel00 + (m_pixel_delta_u * (i + offset[X])) + (m_pixel_delta_v * (j + offset[Y]));
+
+	auto rayOrigin = m_cameraCenter;
+	auto rayDirection = sampledPixelPoint - m_cameraCenter;
+	return Ray(rayOrigin, rayDirection);
+}

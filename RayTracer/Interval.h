@@ -24,6 +24,13 @@ public:
 	{
 		return (x > m_min && x < m_max);
 	}
+
+	T clamp(T val) const
+	{
+		if (val < m_min) return m_min;
+		if (val > m_max) return m_max;
+		return val;
+	}
 	
 	static const Interval<T> empty;
 	static const Interval<T> universe;
