@@ -1,12 +1,59 @@
 #include "Camera.h"
-#include "utils.h"
-Color Camera::rayColor(const Ray& r, const Hittable& world) const
+#include "Utils.h"
+#include "Material.h"
+
+
+/*
+world.hit(r, IntervalF{ 0.001, INF<float> }, tempRec))
+Use tolerance in hit() function (0.001) because intersection point (starting point of
+the bounced ray) could be slightly inside the surface in which case the ray will find
+intersection with the surface again. Applying tolerance allows to exclude hits very close
+to the intersection point.
+*/
+
+
+//Below function generates uniform distribution of reflected rays where each ray has equal probability
+// to get reflected in a particular direction.
+//Color Camera::rayColor(const Ray& r, int max_depth, const Hittable& world) const
+//{
+//	HitRecord tempRec;
+//
+//	if (max_depth <= 0) return Color(0.0, 0.0, 0.0);
+//
+//	if (world.hit(r, IntervalF{ 0.001, INF<float> }, tempRec))
+//	{
+//		//return (tempRec.normal + Color(1.0f, 1.0f, 1.0f)) * 0.5;
+//
+//		auto direction = randomOnHemisphere(tempRec.normal);
+//		return rayColor(Ray(tempRec.point, direction), max_depth - 1, world) * 0.5;
+//	}
+//
+//	Vector3f unit_direction = r.direction();
+//	unit_direction.normalize();
+//	float a = 0.5 * (unit_direction[Y] + 1.0);
+//	return Color(1.0f, 1.0f, 1.0f) * (1.0 - a) + Color(0.5f, 0.7f, 1.0f) * a;
+//}
+
+//Below function creates LAMBERTIAN reflection where reflected ray has more probabilty
+//to reflect closer to surface normal than away from the normal. This is more closer to the
+//actual diffuse material.
+Color Camera::rayColor(const Ray& r, int max_depth, const Hittable& world) const
 {
 	HitRecord tempRec;
 
-	if (world.hit(r, IntervalF{ 0.0, INF<float> }, tempRec))
+	if (max_depth <= 0) return Color(0.0, 0.0, 0.0);
+
+	if (world.hit(r, IntervalF{ 0.001, INF<float> }, tempRec))
 	{
-		return (tempRec.normal + Color(1.0f, 1.0f, 1.0f)) * 0.5;
+		Ray scattered;
+		Color attenuation;
+
+		if (tempRec.material->scatter(r, tempRec, attenuation, scattered))
+		{
+			return rayColor(scattered, max_depth - 1, world) * attenuation;
+		}
+
+		return Color(0.0f,0.0f,0.0f);
 	}
 
 	Vector3f unit_direction = r.direction();
@@ -39,7 +86,7 @@ void Camera::render(const Hittable& world)
 			for (int sample = 0; sample < m_samplesPerPixel; ++sample)
 			{
 				Ray r = getRay(j, i);
-				pixelColor +=  rayColor(r, world);
+				pixelColor +=  rayColor(r, m_maxDepth, world);
 			}
 			write_color(std::cout, pixelColor * m_pixelSamplesScale);
 		}

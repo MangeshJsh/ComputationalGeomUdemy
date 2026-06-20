@@ -43,11 +43,35 @@ inline Vector3f randomUnitVec()
 		auto p = randomVec(-1.0f, 1.0f);
 		auto lensq = p.length_squared();
 
-		const auto MIN_FLOAT = std::numeric_limits<float>::min();
+		constexpr auto MIN_FLOAT = std::numeric_limits<float>::min();
 
 		if (MIN_FLOAT < lensq && lensq <= 1)
 		{
 			return p / std::sqrt(lensq);
 		}
 	}
+} 
+
+inline Vector3f randomOnHemisphere(const Vector3f& normal)
+{
+	auto randomVec = randomUnitVec();
+
+	if (randomVec.dot(normal) > 0.0f)
+	{
+		return randomVec;
+	}
+	else
+		return -randomVec;
+
 }
+
+/*To get the reflected ray, find projection of incoming ray v onto normal n. normal n is unit length.
+ scale n 2 times of the projection magnitude and subtract from vector v which is pointed inside the
+ surface.
+*/
+
+inline Vector3f reflect(const Vector3f& v, const Vector3f& n)
+{
+	return v - (n * v.dot(n) * 2);
+}
+

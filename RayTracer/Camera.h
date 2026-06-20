@@ -11,15 +11,16 @@ class Camera
 {
 public:
 
-	float m_aspectRatio = 1.0f;
-	int m_imageWidth = 100;
-	int m_samplesPerPixel = 10;
+	float m_aspectRatio = 1.0f; //Ratio of image width over hight
+	int m_imageWidth = 100;     //rendered image width in pixel count
+	int m_samplesPerPixel = 10; //number of random samples per pixel
+	int m_maxDepth = 10;			//number of ray bounces into the scene
 
 	void render(const Hittable& world);
 	
 private:
 	void initialize();
-	Color rayColor(const Ray& r, const Hittable& world) const;
+	Color rayColor(const Ray& r, int max_depth, const Hittable& world) const;
 
 	// Returns the vector to a random point in the [-.5,-.5]-[+.5,+.5] unit square.
 	Vector3f sampleSquare() const;

@@ -1,7 +1,7 @@
 #include "Sphere.h"
 
-Sphere::Sphere(const Point3d center, float radius) :
-	m_center(center), m_radius(std::fmax(0.0f, radius))
+Sphere::Sphere(const Point3d center, float radius, std::shared_ptr<Material> mat) :
+	m_center(center), m_radius(std::fmax(0.0f, radius)), m_material(mat)
 {}
 
 bool Sphere::hit(const Ray& r, const IntervalF& ray_t, HitRecord& rec) const
@@ -33,6 +33,6 @@ bool Sphere::hit(const Ray& r, const IntervalF& ray_t, HitRecord& rec) const
 	rec.point = r.at(t);
 	auto outwardNormal = (rec.point - m_center) / m_radius;
 	rec.setFaceNormal(r, outwardNormal);
-
+	rec.material = m_material;
 	return true;
 }

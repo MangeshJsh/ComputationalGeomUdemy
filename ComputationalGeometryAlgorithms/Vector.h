@@ -100,6 +100,11 @@ public:
 	//normalize
 	void normalize();
 
+	bool nearZero() const
+	{
+		return std::fabs(coords[0]) < ZERO_TOL && std::fabs(coords[1]) < ZERO_TOL && std::fabs(coords[2]) < ZERO_TOL;
+	}
+
 	friend std::ostream& operator<<(std::ostream& out, const Vector<coordinate_type, dimension>& vec)
 	{
 		for (size_t i = 0; i < coords.size(); ++i)
@@ -333,6 +338,10 @@ Vector<coordinate_type, dimension> Vector<coordinate_type, dimension>::operator*
 	}
 
 	return temp;
+}
+
+inline Vector3f operator*(const Vector3f& u, const Vector3f& v) {
+	return Vector3f(u[X] * v[X], u[Y] * v[Y], u[Z] * v[Z]);
 }
 
 float crossProduct2D(Vector2f v1, Vector2f v2);

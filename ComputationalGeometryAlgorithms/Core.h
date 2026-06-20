@@ -4,6 +4,8 @@
 
 constexpr float TOLERANCE = 0.0000001f;
 
+constexpr float ZERO_TOL = 1e-8;
+
 template<typename T>
 constexpr T INF = std::numeric_limits<T>::infinity();
 

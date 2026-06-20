@@ -2,7 +2,9 @@
 
 #include "Ray.h"
 #include "Interval.h"
+#include <memory>
 
+class Material;
 /*
 It is important to determine which side of the object the ray is on.
 Also, we can always maintain the normal to point outwards or point against the ray.
@@ -23,6 +25,7 @@ struct HitRecord
 	Vector3f normal;
 	float t;
 	bool frontFace;
+	std::shared_ptr<Material> material;
 
 	void setFaceNormal(const Ray& r, const Vector3f& outwardNormal)
 	{
