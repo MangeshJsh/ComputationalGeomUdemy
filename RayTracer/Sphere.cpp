@@ -2,7 +2,19 @@
 
 Sphere::Sphere(const Point3d center, float radius, std::shared_ptr<Material> mat) :
 	m_center(center), m_radius(std::fmax(0.0f, radius)), m_material(mat)
-{}
+{
+	auto rvec = Vector3f(radius, radius, radius);
+	m_boundingBox = AABB(center - rvec, center + rvec);
+}
+
+Sphere::Sphere(const Point3d center1, const Point3d center2, float radius, std::shared_ptr<Material> mat) :
+	m_center(center1), m_displacementVec(center1, center2 - center1),  m_radius(std::fmax(0.0f, radius)), m_material(mat)
+{
+	auto rvec = Vector3f(radius, radius, radius);
+	auto bbox0 = AABB(m_displacementVec.at(0) - rvec, m_displacementVec.at(0) + rvec);
+	auto bbox1 = AABB(m_displacementVec.at(1) - rvec, m_displacementVec.at(1) + rvec);
+	m_boundingBox = AABB(bbox0, bbox1);
+}
 
 bool Sphere::hit(const Ray& r, const IntervalF& ray_t, HitRecord& rec) const
 {

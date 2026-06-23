@@ -25,3 +25,14 @@ bool Metal::scatter(const Ray& r_in, const HitRecord& rec,
 	attenuation = m_albedo;
 	return true;
 }
+
+bool MetalWithFuzz::scatter(const Ray& r_in, const HitRecord& rec,
+	Color& attenuation, Ray& scattered) const
+{
+	Vector3f reflected = reflect(r_in.direction(), rec.normal);
+	reflected.normalize();
+	reflected += (randomUnitVec() * m_fuzz);
+	scattered = Ray(rec.point, reflected);
+	attenuation = m_albedo;
+	return scattered.direction().dot(rec.normal) > 0;
+}

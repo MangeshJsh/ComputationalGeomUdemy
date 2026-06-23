@@ -17,6 +17,7 @@ public:
 	void add(shared_ptr<Hittable> obj)
 	{
 		m_objects.push_back(obj);
+		m_boundingBox = AABB(m_boundingBox, obj->boundingBox());
 	}
 
 	bool hit(const Ray& r, const IntervalF& ray_t, HitRecord& rec) const override
@@ -41,5 +42,6 @@ public:
 
 private:
 	std::vector<shared_ptr<Hittable>> m_objects;
+	AABB m_boundingBox;
 
 };

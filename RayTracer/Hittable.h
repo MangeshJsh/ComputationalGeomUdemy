@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Ray.h"
-#include "Interval.h"
+#include "AABB.h"
 #include <memory>
 
 class Material;
@@ -42,4 +42,6 @@ public:
 	virtual ~Hittable() = default;
 
 	virtual bool hit(const Ray& r, const IntervalF& ray_t, HitRecord& rec) const = 0;
+
+	virtual AABB boundingBox() const = 0;
 };

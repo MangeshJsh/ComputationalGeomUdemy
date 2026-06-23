@@ -13,6 +13,12 @@ public:
 
 	Interval(T min, T max) : m_min(min), m_max(max) {}
 
+	Interval(const Interval& a, const Interval& b)
+	{
+		m_min = a.m_min <= b.m_min ? a.m_min : b.m_min;
+		m_max = a.m_max >= b.m_max ? a.m_max : b.m_max;
+	}
+
 	T size() { return m_max - m_min; }
 
 	bool contains(T x) const
@@ -30,6 +36,12 @@ public:
 		if (val < m_min) return m_min;
 		if (val > m_max) return m_max;
 		return val;
+	}
+
+	Interval expand(T delta)
+	{
+		auto padding = delta / 2;
+		return Interval(m_min - padding, m_max + padding);
 	}
 	
 	static const Interval<T> empty;

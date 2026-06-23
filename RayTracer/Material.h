@@ -41,3 +41,19 @@ private:
 
 	Color m_albedo;
 };
+
+
+class MetalWithFuzz : public Material
+{
+public:
+
+	MetalWithFuzz(const Color& albedo, float fuzz) : m_albedo(albedo), m_fuzz(fuzz < 1 ? fuzz : 1){}
+
+	bool scatter(const Ray& r_in, const HitRecord& rec,
+		Color& attenuation, Ray& scattered) const;
+
+private:
+
+	Color m_albedo;
+	float m_fuzz;
+};
